@@ -4,6 +4,7 @@ class UsersEditTest < ActionDispatch::IntegrationTest
 
   def setup
     @user = users(:ross)
+    @other_user = users(:berg)
   end
 
   test "unsuccessful edit" do
