@@ -40,6 +40,13 @@ end
     BCrypt::Password.new(digest).is_password?(token)
   end
 
+
+  # Activated an account.
+  def activate
+    self.update_attribute(:activated,    true)
+    self.update_attribute(:activated_at, Time.zone.now)
+  end
+    
   private
 
     # Converts email to all lower-case
