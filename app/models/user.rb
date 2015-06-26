@@ -35,7 +35,7 @@ end
 
   # Returns true if the given token matches the digest.
   def authenticated?(attribute, token)
-    digest = self.send("#{attribute}_digest")
+    digest = send("#{attribute}_digest")
     return false if digest.nil?
     BCrypt::Password.new(digest).is_password?(token)
   end
@@ -43,10 +43,15 @@ end
 
   # Activated an account.
   def activate
-    self.update_attribute(:activated,    true)
-    self.update_attribute(:activated_at, Time.zone.now)
+    update_attribute(:activated,    true)
+    update_attribute(:activated_at, Time.zone.now)
   end
-    
+
+  # Sends activation email.
+  def send_activation_email
+    UserMailer.account_activation(self).deliver_now
+  end
+
   private
 
     # Converts email to all lower-case
